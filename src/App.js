@@ -16,9 +16,9 @@ export default class App extends Component {
           <WeavyApp
             spaceKey="react-space"
             spaceName="React Space"
-            appKey="react-feed"
+            appKey="react-files"
             appName="React App"
-            appType="posts"
+            appType="files"
             />
         </div>
       </Weavy>
