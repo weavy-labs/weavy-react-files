@@ -2,7 +2,7 @@ import { Component } from 'react';
 import './App.css';
 
 import Weavy from './weavy/Weavy';
-import WeavyChat from './weavy/WeavyChat';
+import WeavyApp from './weavy/WeavyApp';
 
 export default class App extends Component {
   async getJwt() {
@@ -13,12 +13,12 @@ export default class App extends Component {
     return (
       <Weavy jwt={this.getJwt}>
         <div className="App">
-          <WeavyChat
+          <WeavyApp
             spaceKey="react-space"
             spaceName="React Space"
-            appKey="react-chat"
-            appName="React Chat"
-            appType="messenger"
+            appKey="react-feed"
+            appName="React App"
+            appType="posts"
             />
         </div>
       </Weavy>

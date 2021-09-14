@@ -2,16 +2,16 @@ import { Component } from 'react';
 import './Weavy.css';
 import WeavyContext from './WeavyContext'
 
-export default class WeavyChat extends Component {
+export default class WeavyApp extends Component {
   static contextType = WeavyContext;
 
-  async createWeavyChat() {
+  async createWeavyApp() {
     this.weavySpace = this.weavy.space({
       key: this.props.spaceKey,
       name: this.props.spaceName
     });
 
-    this.weavyChat = this.weavySpace.app({
+    this.weavyApp = this.weavySpace.app({
       key: this.props.appKey,
       type: this.props.appType,
       name: this.props.appName,
@@ -21,7 +21,7 @@ export default class WeavyChat extends Component {
 
   componentDidMount() {
     this.weavy = this.context.weavy;
-    this.createWeavyChat();
+    this.createWeavyApp();
   }
 
   shouldComponentUpdate(nextProps){
@@ -32,12 +32,12 @@ export default class WeavyChat extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    this.weavyChat.remove();
-    this.createWeavyChat();
+    this.weavyApp.remove();
+    this.createWeavyApp();
   }
 
   componentWillUnmount() {
-    this.weavyChat.remove();
+    this.weavyApp.remove();
   };
 
   render() {
