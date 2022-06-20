@@ -1,23 +1,32 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import './Weavy.css';
 
 import WeavyContext from './WeavyContext';
 
-export default class Weavy extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { weavy: new window.Weavy({ jwt: props.jwt, init: false }) };
-  };
 
-  componentDidMount() {
-    this.state.weavy.init();
-  }
+const Weavy = ({ children, jwt }) => {
 
-  componentWillUnmount() {
-    this.state.weavy.destroy();
-  };
+  const [weavy, setWeavy] = useState(null);
 
-  render() {
-    return <WeavyContext.Provider value={this.state}>{this.props.children}</WeavyContext.Provider>;
-  };
+  useEffect(() => {
+    setWeavy(new window.Weavy({ jwt: jwt, init: false }))
+  }, [jwt])
+
+  useEffect(() => {
+    if (weavy) {
+      weavy.init();
+    }
+
+    return () => {
+      if (weavy) {
+        weavy.destroy();
+      }
+    }
+  }, [weavy])
+
+  return (
+    <WeavyContext.Provider value={{ weavy: weavy }}>{children}</WeavyContext.Provider>
+  )
 }
+
+export default Weavy;

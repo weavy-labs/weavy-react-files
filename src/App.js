@@ -1,25 +1,26 @@
 import { Component } from 'react';
 import './App.css';
-
+import { Link, Outlet } from "react-router-dom";
 import Weavy from './weavy/Weavy';
-import WeavyApp from './weavy/WeavyApp';
 
 export default class App extends Component {
   async getJwt() {
-    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0ZXN0IiwiaWF0IjoxNjA1MDM1MTY2LCJleHAiOjE2MzY1NzExNzYsInN1YiI6InRlc3RlciIsImNsaWVudF9pZCI6ImNsaWVudGlkIiwiZW1haWwiOiJ0ZXN0ZXJAZW1haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0ZXIifQ.MhPMARKc1UaFtcjnvDmO-Z8fFmxdp4EE-Bz-0H3-doQ';
+    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0ZXN0IiwiaWF0IjoxNjA1MDM1MTY2LCJleHAiOjI2MzY1NzExNzYsInN1YiI6InRlc3RlciIsImNsaWVudF9pZCI6ImNsaWVudGlkIiwiZW1haWwiOiJ0ZXN0ZXJAZW1haWwuY29tIiwidXNlcm5hbWUiOiJ0ZXN0ZXIifQ.62Zewkx-CyFK-79074rHH5BFFl4B1I_SvvGTTYxTpRM';
   }
 
   render() {
     return (
       <Weavy jwt={this.getJwt}>
         <div className="App">
-          <WeavyApp
-            spaceKey="react-space"
-            spaceName="React Space"
-            appKey="react-files"
-            appName="React App"
-            appType="files"
-            />
+          <div className='navbar'>
+            <Link to="/">Home</Link>
+            <Link to="/posts">Posts</Link>            
+            <Link to="/files">Files</Link>
+          </div>
+          <main>
+            <p>Weavy &amp; React example. Select an app in the navigation above...</p>
+            <Outlet />
+          </main>          
         </div>
       </Weavy>
     );

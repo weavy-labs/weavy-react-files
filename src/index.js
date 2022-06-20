@@ -2,11 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Posts from "./Posts";
+import Files from "./Files";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} >
+          <Route path="posts" element={<Posts />} />
+          <Route path="files" element={<Files />} />
+        </Route>
+        
+      </Routes>
+        
+    </BrowserRouter>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

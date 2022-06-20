@@ -1,46 +1,50 @@
-import { Component } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './Weavy.css';
 import WeavyContext from './WeavyContext'
 
-export default class WeavyApp extends Component {
-  static contextType = WeavyContext;
+const WeavyApp = ({spaceKey, spaceName, appKey, appType, appName}) => {
 
-  async createWeavyApp() {
-    this.weavySpace = this.weavy.space({
-      key: this.props.spaceKey,
-      name: this.props.spaceName
+  const { weavy } = useContext(WeavyContext);
+  const [app, setApp] = useState(null);
+  const container = useRef();
+
+  const createWeavyApp = async () => {
+    const space = weavy.space({
+      key: spaceKey,
+      name: spaceName
     });
 
-    this.weavyApp = this.weavySpace.app({
-      key: this.props.appKey,
-      type: this.props.appType,
-      name: this.props.appName,
-      container: this.el
-    });
-  }
+    setApp(space.app({
+      key: appKey,
+      type: appType,
+      name: appName,
+      container: container.current
+    }));
 
-  componentDidMount() {
-    this.weavy = this.context.weavy;
-    this.createWeavyApp();
-  }
-
-  shouldComponentUpdate(nextProps){
-    // A key must change for the app to change
-    var spaceChanged = nextProps.spaceKey !== this.props.spaceKey;
-    var appChanged = nextProps.appKey !== this.props.appKey;
-    return spaceChanged || appChanged;
-  }
-
-  componentDidUpdate(prevProps) {
-    this.weavyApp.remove();
-    this.createWeavyApp();
-  }
-
-  componentWillUnmount() {
-    this.weavyApp.remove();
   };
 
-  render() {
-    return <div className="weavy-container" ref={el => this.el = el} />;
-  };
+  useEffect(() => {
+    return () => {
+      if(app){        
+        app.remove();
+      }
+    }
+  }, [app])
+
+  useEffect(() => {
+    async function create(){
+      await createWeavyApp();
+    }
+
+    if(weavy){      
+      create();
+    }    
+
+  }, [weavy, spaceKey, appKey])
+
+  return (
+    <div className="weavy-container" ref={container}></div>
+  )
 }
+
+export default WeavyApp;
