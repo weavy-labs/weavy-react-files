@@ -17,8 +17,7 @@ export default class App extends Component {
             <Link to="/posts">Posts</Link>            
             <Link to="/files">Files</Link>
           </div>
-          <main>
-            <p>Weavy &amp; React example. Select an app in the navigation above...</p>
+          <main>            
             <Outlet />
           </main>          
         </div>
